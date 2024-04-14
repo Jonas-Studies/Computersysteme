@@ -51,7 +51,7 @@
 ## a)
 1 KiB entspricht 2^10 Byte. Das sind 1024 Byte. Ein double quadword hat 16 Byte. Somit passen in 1 KiB 1024 / 16 = 64 quadwords.
 ## b)
-1 KiBit entspricht 1024^4 Bit. Ein Byte entspricht 8 Bit. Ein Megabyte 1000^2 Byte. Somit entspricht 1 KiBit 1024^4 / (8 * 1000^2) = 137439 Megabyte.
+1 KiBit entspricht 1024 Bit. Ein Byte entspricht 8 Bit. Ein Megabyte 1000^2 Byte. Somit entspricht 1 KiBit 1024 / (8 * 1000^2) = 0,000128 Megabyte.
 ## c)
 rax = 0000 00CE F5E8 0E38
 eax = 0000 00CE 000B DE31
