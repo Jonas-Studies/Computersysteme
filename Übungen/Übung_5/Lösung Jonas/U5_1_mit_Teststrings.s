@@ -9,6 +9,10 @@
 		.quad -17
 	OUTSTRING:
 		.asciz "x: %ld, y: %ld\n"
+	TESTSTRING_DIVISION_RESULT:
+		.asciz "%ld R %ld\n"
+	TESTSTRING_MULTIPLICATION_RESULT:
+		.asciz "%ld\n"
 
 .section .bss
 	.lcomm x, 8
@@ -22,22 +26,41 @@ main:
 	pushq %rbp
 	movq %rsp, %rbp
 
-	// Teilen von 61 durch 5
 	movq C61, %rax
 	cdq
+
 	idivq C5
 	
+	movq %rax, x
 	movq %rdx, y
+	
+	movq $TESTSTRING_DIVISION_RESULT, %rdi
+	movq %rax, %rsi
+	# Der Rest steht automatisch in %rdx
+	call printf
 
-	// Multiplizieren von rax mit 7
+	movq x, %rax
+
 	imulq C7
 
-	// Teilen von rax durch -17
+	movq %rax, x
+
+	movq $TESTSTRING_MULTIPLICATION_RESULT, %rdi
+	movq %rax, %rsi
+	call printf
+
+	movq x, %rax
 	cdq
+
 	idivq CNEG17
 
 	movq %rax, x
 	addq %rdx, y
+
+	movq $TESTSTRING_DIVISION_RESULT, %rdi
+	movq %rax, %rsi
+	# Der Rest steht automatisch in %rdx
+	call printf
 
 	movq $OUTSTRING, %rdi
 	movq x, %rsi
