@@ -1,6 +1,6 @@
 .section .rodata
 	OUTPUT_DECIMAL:
-		.asciz "%ld"
+		.asciz "%c"
 	OUTPUT_SPACE:
 		.asciz " "
 	OUTPUT_BLANKS:
@@ -16,44 +16,45 @@ main:
 	pushq %rbp
 	movq %rsp, %rbp
 
-	movq $1, %r14
+	movb $1, %r14b
 
 do_while_r14_isNotGreater_LIMIT:
-	movq $1, %r12
+	movb $1, %r12b
 
 	jmp while_r12_isNotGreater_LIMIT
 
 do_for_r12_isNotGreater_LIMIT:
-	movq $1, %r13
+	movb $1, %r13b
 
 	jmp while_r13_isNotGreater_LIMIT
 
 while_r13_isNotGreater_LIMIT_do:
 	movq $OUTPUT_DECIMAL, %rdi
-	movq %r13, %rsi
+	movb %r13b, %sil
+	addb $48, %sil
 	call printf
 
-	add $1, %r13
+	addb $1, %r13b
 
 while_r13_isNotGreater_LIMIT:
-	cmp $LIMIT, %r13
+	cmp $LIMIT, %r13b
 	jbe while_r13_isNotGreater_LIMIT_do
 
 	movq $OUTPUT_SPACE, %rdi
 	call printf
 
-	addq $1, %r12
+	addb $1, %r12b
 	
 while_r12_isNotGreater_LIMIT:
-	cmp $LIMIT, %r12
+	cmp $LIMIT, %r12b
 	jbe do_for_r12_isNotGreater_LIMIT
 
-	addq $1, %r14
+	addb $1, %r14b
 
 	movq $OUTPUT_BLANKS, %rdi
 	call puts
 
-	cmp $LIMIT, %r14
+	cmp $LIMIT, %r14b
 	jbe do_while_r14_isNotGreater_LIMIT
 
 	movq $0, %rax
