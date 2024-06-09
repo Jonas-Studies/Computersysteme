@@ -8,6 +8,16 @@
 		.quad 1006
 		.quad 2000
 	
+	jumptable:
+		.quad case_is_999
+		.quad case_default
+		.quad case_default
+		.quad case_is_1002
+		.quad case_default
+		.quad case_is_1004
+		.quad case_default
+		.quad case_is_1006
+	
 .section .text
 	.globl _start
 	.type _start, @function
@@ -16,7 +26,7 @@ _start:
   pushq %rbp
   movq %rsp, %rbp
 
-  jmp for_loop
+  jmp for_loop_start
 
 end:
   movq $60, %rax
@@ -24,7 +34,8 @@ end:
   popq %rbp
   syscall
 
-for_loop:
+
+for_loop_start:
   movq $0, %r15
 
 for_loop_condition:
@@ -32,7 +43,7 @@ for_loop_condition:
   cmp $6, %r15
   jg for_loop_end
 
-  jmp case
+  jmp case_start
 
 for_loop_statement:
   addq $1, %r15
@@ -42,23 +53,20 @@ for_loop_end:
   jmp end
 
 
-case:
+case_start:
   // Compare the value at the for loop-values position in the array
   movq array(, %r15, 8), %r14
   
   cmp $999, %r14
-  je case_is_999
-
-  cmp $1002, %r14
-  je case_is_1002
-
-  cmp $1004, %r14
-  je case_is_1004
+  jl case_default
 
   cmp $1006, %r14
-  je case_is_1006
+  jg case_default
 
-  // Case default
+  subq $999, %r14
+  jmp *jumptable(, %r14, 8)
+
+case_default:
   movq $0, %rax
   jmp case_end
 
