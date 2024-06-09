@@ -7,7 +7,16 @@
 		.quad 1002
 		.quad 1006
 		.quad 2000
-		
+	
+	jumptable:
+		.quad case_is_999
+		.quad case_default
+		.quad case_default
+		.quad case_is_1002
+		.quad case_default
+		.quad case_is_1004
+		.quad case_default
+		.quad case_is_1006
 
 .section .text
 	.globl _start
@@ -21,22 +30,17 @@ _start:
   movq $0, %r15
   jmp while_r15_isNotGreater_6
 while_r15_isNotGreater_6_do:
-  leaq array, %r14
-  movq (%r14, %r15, 8), %r13
+  movq array(, %r15, 8), %r13
 
   cmp $999, %r13
-  je case_is_999
-
-  cmp $1002, %r13
-  je case_is_1002
-
-  cmp $1004, %r13
-  je case_is_1004
+  jl case_default
 
   cmp $1006, %r13
-  je case_is_1006
+  jg case_default
 
-  jmp case_default
+  subq $999, %r13
+  leaq jumptable(, %r13, 8), %r12
+  jmp *(%r12)
 
 case_default:
   movq $0, %rdi
