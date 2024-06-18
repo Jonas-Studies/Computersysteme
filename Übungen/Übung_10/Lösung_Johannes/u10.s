@@ -2,7 +2,7 @@
 
 
 .section .rodata
-    format: .asciz "Result: %ld\n"
+    OUTPUT: .asciz "Result: %ld\n"
 
 .section .text
     .global main
@@ -53,12 +53,12 @@ main:
 
 
     # print result
-    leaq format(%rip), %rdi
+    movq $OUTPUT, %rdi
     movq %rax, %rsi
-    xorq %rax, %rax
+    movq $0, %rax
     call printf
 
-
+    movq $0, %rax
     movq %rbp, %rsp
     popq %rbp
     ret
