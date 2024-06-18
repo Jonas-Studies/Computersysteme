@@ -1,4 +1,5 @@
 .section .data
+	// In den Vorlesungsfolien wird die minimal gepackte Datenstruktur ohne .globl etc. angegeben
 	struct_01:
 		.byte 0
 		.long 1
