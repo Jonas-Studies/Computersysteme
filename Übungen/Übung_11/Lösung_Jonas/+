@@ -1,0 +1,33 @@
+.section .rodata
+	OUTPUT_CHARACTER:
+		.asciz "%c"
+	OUTPUT_EMPTY:
+		.asciz ""
+	WORD:
+		.asciz "ABC"
+
+.section .text
+	.global main
+		.type main, @function
+	.global print_reverse_start
+		.type print_reverse_start, @function
+
+main:
+	pushq %rbp
+	movq %rsp, %rbp
+
+	movl $WORD, %eax
+
+	movq %rbp, %rsp
+	popq %rbp
+
+	ret
+
+print_reverse_start:
+	pushq %rbp
+	movq %rsp, %rbp
+
+	movq %rbp, %rsp
+	popq %rbp
+
+	ret
