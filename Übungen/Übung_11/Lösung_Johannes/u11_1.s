@@ -2,7 +2,7 @@
     format_char: .asciz "%c"
     emptystring: .asciz ""
     word: .ascii "ABC"
-    word_len = . - word  # Let the compiler calculate the length of the string
+    word_len: .quad 3
 
 
 .section .text
@@ -17,11 +17,13 @@ main:
     movq %rsp, %rbp
 
     leaq word(%rip), %rdi
-    movl $word_len, %esi
+    movq word_len(%rip), %rsi
     call printReverse
 
     leaq emptystring(%rip), %rdi
     call puts
+
+    movq $0, %rax
 
     movq %rbp, %rsp
     popq %rbp
