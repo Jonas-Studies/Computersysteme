@@ -10,5 +10,5 @@ Topics: #computersysteme
 ## [[GNU Assembler]]
 ## [[Register und Aufrufkonventionen]]
 ## [[Kontrollstrukturen]]
-## [[Fließkommazahlen]]
+## [[400 Studium/Bachelor Informatik/S2/Computersysteme/Jonas-Computersysteme/Zusammenfassung Johannes/Computersysteme Zusammenfassung/Fließkommazahlen/Fließkommazahlen]]
 ## [[Structs]]
